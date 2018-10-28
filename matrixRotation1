@@ -1,0 +1,86 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the matrixRotation function below.
+def rotar(matrix,xi,yi,m,n):
+    t=matrix[xi][yi]
+    mat = []
+    for fila in matrix:
+        v = []
+        #print(fila)
+        for col in fila:
+            v.append(col)
+        mat.append(v)
+    #print('***************************************************')
+    #print(mat)
+    
+    for i in range(xi,m):
+        for j in range(yi,n):
+            if i == xi and j < n-1:
+                #print(matrix[i][j])
+                mat[i][j]= matrix[i][j+1]
+                
+    for i in range(xi,m):
+        for j in range(yi,n):
+            if j == n-1 and i < m-1:
+                mat[i][j] = matrix[i+1][j]
+                
+    for i in range(xi,m):
+        for j in range(yi,n):
+            if i == m-1 and j < n -1:
+                mat[i][j+1] = matrix[i][j]
+                
+    for i in range(xi,m):
+        for j in range(yi,n):
+            if j == yi and i < m-1:
+                mat[i+1][j] = matrix[i][j]
+                
+    
+    mat[xi+1][xi]= t
+    return mat
+
+def matrixRotation(matrix, r):
+    lf = len(matrix)
+    lc = len(matrix[0])
+
+    i=0
+    ri = r%(2*lf+2*lc)
+    if lf<lc:
+        l = lf
+    else:
+        l = lc
+    while i < l/2:
+        for n in range(ri):
+            matrix= rotar(matrix,i,i,lf-i,lc-i)
+        i+=1
+    #return matrix
+    
+    
+    for n in matrix:
+        s=''
+        for i in n:
+            s+=str(i)+' '
+        print(s)
+        
+    #return mat
+
+if __name__ == '__main__':
+    mnr = input().rstrip().split()
+
+    m = int(mnr[0])
+
+    n = int(mnr[1])
+
+    r = int(mnr[2])
+
+    matrix = []
+
+    for _ in range(m):
+        matrix.append(list(map(int, input().rstrip().split())))
+
+    matrixRotation(matrix, r)
