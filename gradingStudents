@@ -1,0 +1,15 @@
+def gradingStudents(grades):
+    #
+    # Write your code here.
+    #
+    sal = []
+    for n in grades:
+        if n >= 38:
+            next_multiple = ((n//5)+1)*5
+            if next_multiple - n < 3:
+                sal.append(next_multiple)
+            else:
+                sal.append(n)
+        else:
+            sal.append(n)
+    return sal
