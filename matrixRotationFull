@@ -1,0 +1,102 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the matrixRotation function below.
+
+def rotar(matrix,mat,xi,yi,m,n,r,x,y):
+    
+
+    elem = matrix[x][y]
+    
+    r = r%(2*(m-xi-1)+2*(n-yi-1))
+
+    while r != 0:
+        if x == xi and y != yi:
+            if r > (y-yi):
+                r = r-(y-yi)
+                y = yi
+            else:
+                y -= r
+                r = 0
+                break
+            
+        if y == yi and x != m-1:
+            if r > (m-1-x):
+                r = r-(m-1-x)
+                x = m-1
+            else:
+                x+=r
+                r=0
+                break
+        if x == m-1 and y != n-1:
+            if r > (n-1-y):
+                r = r -(n-1-y)
+                y = n-1
+            else:
+                y+=r
+                r=0
+                break
+        if y == n-1 and x != xi:
+            if r > (x-xi):
+                r = r-(x-xi)
+                x = xi
+            else:
+                x-=r
+                r=0
+                break
+        else:
+            break
+    #if x >= xi and x < m-1 and y >= yi and y < n-1:
+    mat[x][y] = elem
+    #else:
+        #print(x,y)
+
+    #return t
+
+def matrixRotation(matrix,r):
+    t=[]
+    for fila in (matrix):
+        v = []
+        for col in fila:
+            v.append(0)
+        t.append(v)
+    m = len(matrix)
+    n = len(matrix[0])
+    if m < n:
+        l = m
+    else: 
+        l = n
+    inc = 0
+    while inc < (l//2):
+        for i in range(inc,m-inc):
+            for j in range(inc,n-inc):
+                rotar(matrix,t,inc,inc,m-inc,n-inc,r,i,j)
+        inc+=1
+    
+    for n in t:
+        s=''
+        for i in n:
+            s+=str(i)+' '
+        print(s)
+    #return t
+
+if __name__ == '__main__':
+    mnr = input().rstrip().split()
+
+    m = int(mnr[0])
+
+    n = int(mnr[1])
+
+    r = int(mnr[2])
+
+    matrix = []
+
+    for _ in range(m):
+        matrix.append(list(map(int, input().rstrip().split())))
+
+    matrixRotation(matrix, r)
